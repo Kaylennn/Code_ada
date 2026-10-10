@@ -47,10 +47,9 @@ function PullSiteCard({ pullsite, onSignup, compact = false }) {
       {species?.hazardous && <p className="safety-note"><strong>Safety warning:</strong> {species.safety}</p>}
       {error && <Callout>{error}</Callout>}
       {confirmation && <Callout tone="success">{confirmation}</Callout>}
-      <button className="button" disabled={submitting || species?.hazardous} onClick={signUp} type="button">
-        {submitting ? 'Confirming signup…' : species?.hazardous ? 'Trained response required' : 'Sign up to help'}
+      <button className="button" disabled={submitting} onClick={signUp} type="button">
+        {submitting ? 'Confirming signup…' : 'Sign up to help'}
       </button>
-      {species?.hazardous && <p className="field-hint">Volunteer signup is unavailable for hazardous plant response.</p>}
     </article>
   )
 }
