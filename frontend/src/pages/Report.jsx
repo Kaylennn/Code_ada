@@ -3,8 +3,10 @@ import Callout from '../components/Callout.jsx'
 import MapView from '../components/MapView.jsx'
 import { speciesOptions } from '../data/speciesMetadata.js'
 
-function Report({ onSubmitReport }) {
-  const [species, setSpecies] = useState('')
+function Report({ onSubmitReport, initialSpecies = '' }) {
+  const [species, setSpecies] = useState(() =>
+    speciesOptions.some((item) => item.key === initialSpecies) ? initialSpecies : '',
+  )
   const [location, setLocation] = useState(null)
   const [locating, setLocating] = useState(false)
   const [locationError, setLocationError] = useState('')

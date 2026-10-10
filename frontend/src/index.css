@@ -104,7 +104,7 @@ h2 em {
   position: relative;
   z-index: 1000;
   display: flex;
-  min-height: 82px;
+  min-height: 102px;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
@@ -116,10 +116,10 @@ h2 em {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 13px;
   color: var(--forest);
   font-family: Manrope, sans-serif;
-  font-size: 19px;
+  font-size: 29px;
   font-weight: 800;
   letter-spacing: -0.06em;
   text-decoration: none;
@@ -128,13 +128,13 @@ h2 em {
 
 .brand-mark {
   display: grid;
-  width: 31px;
-  height: 31px;
+  width: 46px;
+  height: 46px;
   place-items: center;
   border-radius: 50%;
   background: var(--forest);
   color: #e9eddd;
-  font-size: 18px;
+  font-size: 27px;
 }
 
 .brand-accent {
@@ -157,7 +157,7 @@ h2 em {
   position: relative;
   padding: 9px 0;
   color: #6a786c;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
   text-decoration: none;
   transition: color 160ms ease;
@@ -187,7 +187,7 @@ h2 em {
   border-radius: 99px;
   background: #e7efe4;
   color: var(--forest);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   padding: 8px 10px;
   white-space: nowrap;
@@ -204,7 +204,7 @@ h2 em {
   background: var(--forest);
   color: var(--white);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   padding: 0 21px;
   text-decoration: none;
@@ -268,7 +268,7 @@ h2 em {
 .eyebrow {
   margin-bottom: 15px;
   color: #7c9277;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.15em;
   line-height: 1.5;
@@ -589,6 +589,37 @@ h2 em {
   margin-bottom: 34px;
 }
 
+.map-page .page-intro {
+  max-width: none;
+}
+
+.map-page-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.map-page-title-row h1 {
+  margin-bottom: 12px;
+}
+
+.map-report-cta {
+  min-height: 58px;
+  flex: 0 0 auto;
+  padding-inline: 26px;
+  font-size: 17px;
+  box-shadow: 0 8px 20px rgb(35 75 54 / 16%);
+}
+
+.map-report-cta span {
+  font-size: 20px;
+}
+
+.map-page .page-intro > p:last-child {
+  font-size: 20px;
+}
+
 .page-intro h1,
 .volunteer-hero h1 {
   margin-bottom: 12px;
@@ -607,6 +638,8 @@ h2 em {
 }
 
 .map-toolbar {
+  position: relative;
+  z-index: 1100;
   display: flex;
   align-items: end;
   gap: 16px;
@@ -617,11 +650,10 @@ h2 em {
   display: grid;
   gap: 6px;
   color: #66746a;
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 700;
 }
 
-.filter-control select,
 .form-field select {
   min-width: 190px;
   min-height: 43px;
@@ -629,7 +661,72 @@ h2 em {
   border-radius: 7px;
   background: #fff;
   color: var(--ink);
+  font-size: 14px;
   padding: 0 32px 0 12px;
+}
+
+.species-filter {
+  position: relative;
+  min-width: 190px;
+}
+
+.species-filter-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 43px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #dfe4da;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 12px;
+  text-align: left;
+}
+
+.species-filter-chevron {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-right: 1px solid currentcolor;
+  border-bottom: 1px solid currentcolor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.species-filter-options {
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid #dfe4da;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgb(33 55 37 / 14%);
+}
+
+.species-filter-option {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.species-filter-option:hover,
+.species-filter-option[aria-selected="true"] {
+  background: #e9eddd;
+  color: var(--forest);
 }
 
 .checkbox-control {
@@ -638,7 +735,7 @@ h2 em {
   align-items: center;
   gap: 8px;
   color: #526155;
-  font-size: 11px;
+  font-size: 18px;
 }
 
 .checkbox-control input {
@@ -700,7 +797,7 @@ h2 em {
   gap: 24px;
   min-height: 41px;
   color: #69786c;
-  font-size: 10px;
+  font-size: 16px;
 }
 
 .map-legend > span {
@@ -738,7 +835,7 @@ h2 em {
 .map-frame {
   overflow: hidden;
   width: 100%;
-  min-height: 430px;
+  min-height: 560px;
   border: 1px solid #dfe5d9;
   border-radius: 15px;
   background: #e7efe4;
@@ -747,7 +844,7 @@ h2 em {
 
 .map-canvas {
   width: 100%;
-  height: 430px;
+  height: 560px;
   z-index: 1;
   font-family: 'DM Sans', sans-serif;
 }
@@ -1416,17 +1513,17 @@ h2 em {
   }
 
   .brand {
-    font-size: 17px;
+    font-size: 20px;
+  }
+
+  .brand-mark {
+    width: 33px;
+    height: 33px;
+    font-size: 19px;
   }
 
   .header-actions {
     margin-left: auto;
-  }
-
-  .header-actions .button {
-    min-height: 36px;
-    padding-inline: 11px;
-    font-size: 10px;
   }
 
   .main-nav {
@@ -1438,7 +1535,7 @@ h2 em {
   }
 
   .nav-link {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .nav-link.is-active::after {
@@ -1448,7 +1545,7 @@ h2 em {
   .points-badge {
     max-width: 135px;
     overflow: hidden;
-    font-size: 9px;
+    font-size: 11px;
     text-overflow: ellipsis;
   }
 
@@ -1469,7 +1566,7 @@ h2 em {
 
   .hero-subtitle {
     max-width: 410px;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .hero-visual {
@@ -1573,6 +1670,22 @@ h2 em {
     margin-bottom: 24px;
   }
 
+  .map-page-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .map-report-cta {
+    width: 100%;
+    min-height: 54px;
+    font-size: 16px;
+  }
+
+  .map-page .page-intro > p:last-child {
+    font-size: 16px;
+  }
+
   .page-intro h1,
   .volunteer-hero h1 {
     font-size: clamp(42px, 10vw, 58px);
@@ -1588,12 +1701,13 @@ h2 em {
     flex: 1 1 100%;
   }
 
-  .filter-control select {
+  .species-filter {
     width: 100%;
   }
 
   .checkbox-control {
     flex: 1 1 auto;
+    font-size: 14px;
   }
 
   .map-toolbar > .inline-link {
@@ -1604,7 +1718,7 @@ h2 em {
     flex-wrap: wrap;
     gap: 10px 16px;
     padding-block: 9px;
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .loading-copy {
@@ -1612,11 +1726,11 @@ h2 em {
   }
 
   .map-frame {
-    min-height: 345px;
+    min-height: 460px;
   }
 
   .map-canvas {
-    height: 345px;
+    height: 460px;
   }
 
   .section-heading--compact {

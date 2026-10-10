@@ -6,6 +6,7 @@ import ExploreMap from './pages/ExploreMap.jsx'
 import Learn from './pages/Learn.jsx'
 import Report from './pages/Report.jsx'
 import Volunteer from './pages/Volunteer.jsx'
+import { speciesMetadata } from './data/speciesMetadata.js'
 import { getPullsites, getSightings, postReport, postSignup } from './services/api.js'
 
 const pages = new Set(['home', 'map', 'learn', 'volunteer', 'report'])
@@ -17,16 +18,22 @@ function routeFromHash() {
 
 function App() {
   const [page, setPage] = useState(routeFromHash)
+  const [learnMounted, setLearnMounted] = useState(() => routeFromHash() === 'learn')
   const [sightings, setSightings] = useState([])
   const [pullsites, setPullsites] = useState([])
   const [sightingsError, setSightingsError] = useState('')
   const [pullsitesError, setPullsitesError] = useState('')
   const [loading, setLoading] = useState(true)
   const [pointsMessage, setPointsMessage] = useState('')
+  const [reportSpecies, setReportSpecies] = useState('')
 
   useEffect(() => {
     let active = true
-    const updatePage = () => setPage(routeFromHash())
+    const updatePage = () => {
+      const nextPage = routeFromHash()
+      setPage(nextPage)
+      if (nextPage === 'learn') setLearnMounted(true)
+    }
     window.addEventListener('hashchange', updatePage)
     Promise.allSettled([getSightings(), getPullsites()]).then((results) => {
       if (!active) return
@@ -71,6 +78,16 @@ function App() {
     return result
   }
 
+  const handleEducationPoints = (points) => {
+    setPointsMessage(`+${points} education points earned`)
+  }
+
+  const handleEducationReport = (species) => {
+    if (!Object.prototype.hasOwnProperty.call(speciesMetadata, species)) return
+    setReportSpecies(species)
+    window.location.hash = 'report'
+  }
+
   const retrySightings = async () => {
     setSightingsError('')
     try {
@@ -106,8 +123,19 @@ function App() {
       <main>
         {page === 'home' && <Home />}
         {page === 'map' && <ExploreMap {...sharedProps} />}
-        {page === 'learn' && <Learn />}
-        {page === 'report' && <Report onSubmitReport={handleReport} />}
+        {learnMounted && (
+          <Learn
+            hidden={page !== 'learn'}
+            onEarnPoints={handleEducationPoints}
+            onReportSpecies={handleEducationReport}
+          />
+        )}
+        {page === 'report' && (
+          <Report
+            initialSpecies={page === 'report' ? reportSpecies : ''}
+            onSubmitReport={handleReport}
+          />
+        )}
         {page === 'volunteer' && <Volunteer {...sharedProps} />}
       </main>
       <Footer />
