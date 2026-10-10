@@ -2,7 +2,7 @@ import json
 import os
 
 from cluster import find_pull_sites
-from species import SPECIES
+from species import SCIENTIFIC_NAMES, SPECIES
 
 path = os.path.join(os.path.dirname(__file__), "seed_data.json")
 with open(path, encoding="utf-8") as f:
@@ -27,6 +27,7 @@ assert any(s["species"] == "poison_hemlock" for s in sites), "hemlock site shoul
 print("OK: adding one hemlock sighting created a pull site")
 
 assert len(SPECIES) == 55, f"expected 55 reportable species, got {len(SPECIES)}"
+assert SCIENTIFIC_NAMES.keys() == SPECIES.keys(), "every reportable species needs a scientific identification label"
 
 # Pest sightings stay on the map and do not create volunteer pull sites.
 pest_sightings = [

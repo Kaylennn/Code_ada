@@ -1,4 +1,12 @@
+import { useEffect, useState } from 'react'
 import BotanicalArt from '../components/BotanicalArt.jsx'
+import { commonsImage, commonsPage, SPECIES_INFO } from '../data/education.js'
+
+const speciesPhotos = Object.values(SPECIES_INFO).flatMap((species) =>
+  (species.images || []).map((photo) => ({ species, photo })),
+)
+
+const photoInterval = 5000
 
 const steps = [
   { number: '01', title: 'Explore', text: 'See what your neighbors have reported across Champaign-Urbana.' },
@@ -7,6 +15,39 @@ const steps = [
 ]
 
 function Home() {
+  const [activePhoto, setActivePhoto] = useState(0)
+  const [previousPhoto, setPreviousPhoto] = useState(null)
+  const [slideDirection, setSlideDirection] = useState('next')
+  const [paused, setPaused] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updatePreference = () => setPrefersReducedMotion(motionPreference.matches)
+    updatePreference()
+    motionPreference.addEventListener('change', updatePreference)
+    return () => motionPreference.removeEventListener('change', updatePreference)
+  }, [])
+
+  useEffect(() => {
+    if (paused || prefersReducedMotion) return undefined
+
+    const intervalId = window.setInterval(() => {
+      setSlideDirection('next')
+      setPreviousPhoto(speciesPhotos[activePhoto])
+      setActivePhoto((current) => (current + 1) % speciesPhotos.length)
+    }, photoInterval)
+
+    return () => window.clearInterval(intervalId)
+  }, [activePhoto, paused, prefersReducedMotion])
+
+  const showPhoto = (offset) => {
+    setSlideDirection(offset < 0 ? 'previous' : 'next')
+    setPreviousPhoto(speciesPhotos[activePhoto])
+    setActivePhoto((current) => (current + offset + speciesPhotos.length) % speciesPhotos.length)
+  }
+  const { species, photo } = speciesPhotos[activePhoto]
+
   return (
     <>
       <section className="home-hero page-shell">
@@ -54,7 +95,50 @@ function Home() {
 
       <section className="section why-section">
         <div className="page-shell why-layout">
-          <div className="why-illustration"><BotanicalArt /></div>
+          <div
+            className="why-illustration"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            onFocus={() => setPaused(true)}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false)
+            }}
+          >
+            <figure className="why-species-photo">
+              <div className="why-species-photo__stage">
+                {previousPhoto && !prefersReducedMotion && (
+                  <img
+                    className={`why-species-photo__image why-species-photo__image--exit-${slideDirection}`}
+                    src={commonsImage(previousPhoto.photo.file, 800)}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                )}
+                <img
+                  key={`${species.key}-${photo.file}`}
+                  className={`why-species-photo__image${previousPhoto && !prefersReducedMotion ? ` why-species-photo__image--enter-${slideDirection}` : ''}`}
+                  src={commonsImage(photo.file, 800)}
+                  alt={`${species.name}: ${photo.caption}`}
+                  onAnimationEnd={() => setPreviousPhoto(null)}
+                />
+              </div>
+              <figcaption>
+                <strong>{species.name}</strong>
+                <span>{photo.caption}</span>
+                <a href={commonsPage(photo.file)} target="_blank" rel="noreferrer">
+                  Photo: {photo.credit} · {photo.license}
+                </a>
+              </figcaption>
+            </figure>
+            <div className="why-species-controls">
+              <button type="button" onClick={() => showPhoto(-1)} aria-label="Previous species photo">
+                <span aria-hidden="true">←</span>
+              </button>
+              <button type="button" onClick={() => showPhoto(1)} aria-label="Next species photo">
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
           <div>
             <p className="eyebrow">Care for the places we call home</p>
             <h2>Why invasive plants matter</h2>
@@ -67,6 +151,11 @@ function Home() {
       </section>
 
       <section className="community-cta">
+        <img
+          className="cta-photo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Corn_fields_near_Royal%2C_Illinois.jpg/1920px-Corn_fields_near_Royal%2C_Illinois.jpg"
+          alt="Corn and soybean fields near Royal in Champaign County, Illinois"
+        />
         <div className="page-shell cta-content">
           <p className="eyebrow eyebrow--light">Better together</p>
           <h2>There’s a place for you<br />in this work.</h2>
@@ -75,6 +164,14 @@ function Home() {
         </div>
         <span className="cta-leaf cta-leaf--one" aria-hidden="true">✳</span>
         <span className="cta-leaf cta-leaf--two" aria-hidden="true">✳</span>
+        <a
+          className="cta-photo-credit"
+          href="https://commons.wikimedia.org/wiki/File:Corn_fields_near_Royal,_Illinois.jpg"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Photo: Daniel Schwen · CC BY-SA 4.0
+        </a>
       </section>
     </>
   )

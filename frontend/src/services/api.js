@@ -10,7 +10,12 @@ async function request(path, options) {
   }
 
   if (!response.ok) {
-    const detail = await response.text()
+    let detail = await response.text()
+    try {
+      detail = JSON.parse(detail)?.error ?? detail
+    } catch {
+      // Keep non-JSON error bodies, such as proxy errors, readable.
+    }
     throw new Error(detail || `Request failed with status ${response.status}.`)
   }
 
@@ -45,6 +50,17 @@ export async function postReport(report) {
   })
   if (!Array.isArray(result?.sightings) || !Array.isArray(result?.pullsites)) {
     throw new Error('The report was not confirmed with updated data. Please retry.')
+  }
+  return result
+}
+
+export async function identifyPhoto(image) {
+  const body = new FormData()
+  body.append('image', image)
+  const result = await request('/api/identify', { method: 'POST', body })
+  if (!['possible_invasive', 'not_in_catalog', 'uncertain'].includes(result?.status)
+    || !Array.isArray(result?.candidates)) {
+    throw new Error('The identification response was incomplete. Please retry.')
   }
   return result
 }

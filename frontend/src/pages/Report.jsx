@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Callout from '../components/Callout.jsx'
 import MapView from '../components/MapView.jsx'
 import SpeciesSelect from '../components/SpeciesSelect.jsx'
 import { speciesOptions } from '../data/speciesMetadata.js'
+import { identifyPhoto } from '../services/api.js'
 
 function Report({ onSubmitReport, initialSpecies = '' }) {
   const [species, setSpecies] = useState(() =>
@@ -14,6 +15,37 @@ function Report({ onSubmitReport, initialSpecies = '' }) {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [success, setSuccess] = useState(false)
+  const [photo, setPhoto] = useState(null)
+  const [photoError, setPhotoError] = useState('')
+  const [identification, setIdentification] = useState(null)
+  const [identifying, setIdentifying] = useState(false)
+  const [photoPreview, setPhotoPreview] = useState('')
+
+  useEffect(() => () => {
+    if (photoPreview) URL.revokeObjectURL(photoPreview)
+  }, [photoPreview])
+
+  const identifyUploadedPhoto = async () => {
+    if (!photo) {
+      setPhotoError('Choose a photo before asking BioCLIP to identify it.')
+      return
+    }
+    setPhotoError('')
+    setIdentification(null)
+    setIdentifying(true)
+    try {
+      setIdentification(await identifyPhoto(photo))
+    } catch (error) {
+      setPhotoError(error.message)
+    } finally {
+      setIdentifying(false)
+    }
+  }
+
+  const chooseCandidate = (candidate) => {
+    setSpecies(candidate.species)
+    setSubmitError('')
+  }
 
   const useCurrentLocation = () => {
     setLocationError('')
@@ -71,6 +103,58 @@ function Report({ onSubmitReport, initialSpecies = '' }) {
           <div className="form-heading">
             <span className="form-step">01</span>
             <div><p className="eyebrow">Observation details</p><h2>What did you see?</h2></div>
+          </div>
+          <div className="photo-identification">
+            <label className="photo-upload-label" htmlFor="report-photo">Have a photo? Get an AI suggestion</label>
+            <p className="form-instruction photo-instruction">
+              BioCLIP compares your photo with TerraTrace species and general “not listed” categories. It is a starting point, not a verified identification.
+            </p>
+            <p className="photo-file-note">JPEG, PNG, or WebP · up to 8 MB</p>
+            <input
+              accept="image/jpeg,image/png,image/webp"
+              id="report-photo"
+              onChange={(event) => {
+                const selectedPhoto = event.target.files?.[0] ?? null
+                setPhoto(selectedPhoto)
+                setPhotoPreview(selectedPhoto ? URL.createObjectURL(selectedPhoto) : '')
+                setPhotoError('')
+                setIdentification(null)
+              }}
+              type="file"
+            />
+            {photoPreview && <img className="photo-preview" src={photoPreview} alt="Preview of the photo to identify" />}
+            <button className="button button--light identify-button" disabled={!photo || identifying} onClick={identifyUploadedPhoto} type="button">
+              {identifying ? 'Analyzing photo…' : 'Suggest species with BioCLIP'}
+            </button>
+            {photoError && <Callout>{photoError}</Callout>}
+            {identification && (
+              <div className="identification-result" aria-live="polite">
+                <strong>
+                  {identification.status === 'possible_invasive'
+                    ? 'Possible catalog match'
+                    : identification.status === 'not_in_catalog'
+                      ? 'No catalog match'
+                      : 'Uncertain result'}
+                </strong>
+                <p>{identification.message}</p>
+                {identification.candidates.some((candidate) => candidate.species) && (
+                  <>
+                    <span className="candidate-label">Closest catalog suggestions</span>
+                    <ul>
+                      {identification.candidates.filter((candidate) => candidate.species).map((candidate) => (
+                        <li key={candidate.species}>
+                          <span>{candidate.name} · relative score {(candidate.relative_score * 100).toFixed(1)}%</span>
+                          <button type="button" onClick={() => chooseCandidate(candidate)}>
+                            {species === candidate.species ? 'Selected' : 'Use this species'}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                <small>{identification.score_note}</small>
+              </div>
+            )}
           </div>
           <div className="form-field">
             <span id="report-species-label">Species or pest</span>
