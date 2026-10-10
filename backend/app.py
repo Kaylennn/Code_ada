@@ -4,11 +4,13 @@ import os
 from datetime import date
 
 from flask import Flask, jsonify, request
+from werkzeug.exceptions import RequestEntityTooLarge
 
 from cluster import find_pull_sites
 from species import SPECIES
 
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 
 SEED_PATH = os.path.join(os.path.dirname(__file__), "seed_data.json")
 MATCH_RADIUS_M = 250  # a recomputed pull site this close to an old one is "the same site"
@@ -73,6 +75,11 @@ def error(message, status):
     return jsonify({"error": message}), status
 
 
+@app.errorhandler(RequestEntityTooLarge)
+def request_too_large(_exception):
+    return error("The uploaded image must be 8 MB or smaller.", 413)
+
+
 refresh_pullsites()
 # Make sure newly created sites never reuse an id that is already taken.
 next_pullsite_id = max((p["id"] for p in pullsites), default=0) + 1
@@ -89,6 +96,28 @@ def get_sightings():
 @app.route("/api/pullsites", methods=["GET"])
 def get_pullsites():
     return jsonify(pullsites)
+
+
+@app.route("/api/identify", methods=["POST"])
+def identify():
+    uploaded = request.files.get("image")
+    if uploaded is None or not uploaded.filename:
+        return error("Choose a photo to identify.", 400)
+
+    from identification import InvalidImageError, decode_image, identify_image
+
+    try:
+        image = decode_image(uploaded.stream)
+    except InvalidImageError as exc:
+        return error(str(exc), 400)
+
+    try:
+        result = identify_image(image)
+    except ImportError:
+        app.logger.exception("BioCLIP dependencies are not installed.")
+        return error("Photo identification is not configured on this server. You can still select a species manually.", 503)
+
+    return jsonify(result)
 
 
 @app.route("/api/report", methods=["POST"])

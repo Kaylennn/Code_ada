@@ -187,7 +187,7 @@ h2 em {
   border-radius: 99px;
   background: #e7efe4;
   color: var(--forest);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   padding: 8px 10px;
   white-space: nowrap;
@@ -224,7 +224,7 @@ h2 em {
 .button--small {
   min-height: 40px;
   padding-inline: 16px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .button--light {
@@ -268,7 +268,7 @@ h2 em {
 .eyebrow {
   margin-bottom: 15px;
   color: #7c9277;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.15em;
   line-height: 1.5;
@@ -310,7 +310,7 @@ h2 em {
 .hero-location {
   margin-top: 26px;
   color: #89958a;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .hero-location span {
@@ -373,7 +373,7 @@ h2 em {
   border-radius: 50%;
   background: #f7f5ec;
   color: var(--forest);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
   line-height: 1.6;
@@ -392,7 +392,7 @@ h2 em {
   max-width: 150px;
   color: #718077;
   font-family: Georgia, serif;
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
   line-height: 1.5;
 }
@@ -420,12 +420,20 @@ h2 em {
   line-height: 1.15;
 }
 
+.section--white .section-heading .eyebrow {
+  font-size: 15px;
+}
+
 .section-heading > p {
   max-width: 365px;
   margin-bottom: 2px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
+}
+
+.section--white .section-heading > p {
+  font-size: 17px;
 }
 
 .steps-grid {
@@ -458,20 +466,20 @@ h2 em {
   border-radius: 50%;
   background: var(--soft-green);
   color: var(--forest);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 .step-card h3 {
   margin-bottom: 8px;
-  font-size: 18px;
+  font-size: 21px;
 }
 
 .step-card p {
   max-width: 280px;
   margin-bottom: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.7;
 }
 
@@ -489,12 +497,123 @@ h2 em {
 
 .why-illustration {
   display: grid;
-  min-height: 300px;
-  place-items: center;
+  justify-items: center;
+  gap: 14px;
 }
 
-.why-illustration .botanical-art {
-  width: min(100%, 360px);
+.why-species-photo {
+  width: min(100%, 380px);
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 18px 42px rgb(34 60 43 / 13%);
+}
+
+.why-species-photo__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.why-species-photo__stage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.why-species-photo__image--enter-next {
+  z-index: 2;
+  animation: why-photo-enter-next 500ms ease both;
+}
+
+.why-species-photo__image--exit-next {
+  z-index: 1;
+  animation: why-photo-exit-next 500ms ease both;
+}
+
+.why-species-photo__image--enter-previous {
+  z-index: 2;
+  animation: why-photo-enter-previous 500ms ease both;
+}
+
+.why-species-photo__image--exit-previous {
+  z-index: 1;
+  animation: why-photo-exit-previous 500ms ease both;
+}
+
+.why-species-photo figcaption {
+  display: grid;
+  gap: 5px;
+  padding: 14px 17px 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.why-species-photo figcaption strong {
+  color: var(--forest);
+  font-size: 14px;
+}
+
+.why-species-photo figcaption a {
+  margin-top: 3px;
+  color: #647267;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.why-species-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #647267;
+  font-size: 14px;
+}
+
+.why-species-controls button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgb(41 70 49 / 20%);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--forest);
+  cursor: pointer;
+}
+
+.why-species-controls button:hover {
+  background: rgb(41 70 49 / 7%);
+}
+
+.why-species-controls button:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 3px;
+}
+
+@keyframes why-photo-enter-next {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes why-photo-exit-next {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes why-photo-enter-previous {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes why-photo-exit-previous {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
 }
 
 .why-layout h2 {
@@ -518,7 +637,7 @@ h2 em {
   align-items: center;
   gap: 8px;
   color: var(--forest);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   text-decoration: none;
 }
@@ -531,8 +650,27 @@ h2 em {
   position: relative;
   overflow: hidden;
   padding-block: 79px;
-  background: var(--forest);
+  isolation: isolate;
+  background: #193b28;
   color: white;
+}
+
+.community-cta::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(16 39 26 / 83%), rgb(16 39 26 / 48%));
+  content: '';
+}
+
+.cta-photo {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 54%;
 }
 
 .cta-content {
@@ -556,8 +694,19 @@ h2 em {
   max-width: 420px;
   margin-bottom: 22px;
   color: #c4d2c5;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.75;
+}
+
+.cta-photo-credit {
+  position: absolute;
+  right: max(32px, calc((100% - 1180px) / 2));
+  bottom: 16px;
+  z-index: 1;
+  color: rgb(255 255 255 / 88%);
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .cta-leaf {
@@ -714,7 +863,7 @@ h2 em {
   background: transparent;
   color: var(--ink);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.35;
   padding: 8px 12px;
   text-align: left;
@@ -734,7 +883,7 @@ h2 em {
   display: block;
   padding: 8px 12px 4px;
   color: #718077;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -777,7 +926,7 @@ h2 em {
   border-radius: 8px;
   background: #fff8ec;
   color: #72522e;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -796,7 +945,7 @@ h2 em {
   background: none;
   color: var(--forest);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   text-decoration: underline;
   white-space: nowrap;
@@ -836,6 +985,20 @@ h2 em {
   color: white;
   font-size: 9px;
   font-weight: 700;
+}
+
+.legend-example {
+  display: inline-grid;
+  width: 21px;
+  height: 21px;
+  place-items: center;
+  border: 2px dashed #fff;
+  border-radius: 50%;
+  background: #718c70;
+  box-shadow: 0 0 0 1px #718c70;
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
 }
 
 .loading-copy {
@@ -888,6 +1051,26 @@ h2 em {
   transform: rotate(45deg);
 }
 
+.species-example-marker {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 2px dashed #fff;
+  border-radius: 50%;
+  background: var(--marker-color);
+  box-shadow: 0 2px 8px rgb(33 55 37 / 35%), 0 0 0 1px rgb(35 75 54 / 25%);
+}
+
+.species-example-marker svg {
+  width: 16px;
+  height: 16px;
+  fill: #fff;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-width: 1.8;
+}
+
 .plant-marker.is-selected,
 .pullsite-marker.is-selected {
   box-shadow: 0 0 0 5px rgb(203 139 72 / 45%), 0 4px 12px rgb(33 55 37 / 30%);
@@ -927,7 +1110,7 @@ h2 em {
 }
 
 .section-heading--compact > p {
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .detail-card {
@@ -970,7 +1153,7 @@ h2 em {
 
 .detail-card > p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
@@ -988,7 +1171,7 @@ h2 em {
 .detail-grid dt {
   margin-bottom: 4px;
   color: #89948a;
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -998,7 +1181,7 @@ h2 em {
   overflow-wrap: anywhere;
   margin: 0;
   color: var(--ink);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -1068,7 +1251,7 @@ h2 em {
 .field-hint {
   margin: 10px 0 0 !important;
   color: var(--muted);
-  font-size: 10px !important;
+  font-size: 14px !important;
 }
 
 .empty-state {
@@ -1098,7 +1281,7 @@ h2 em {
   max-width: 440px;
   margin-bottom: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -1187,14 +1370,14 @@ h2 em {
 .species-card-body > p {
   margin-bottom: 14px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
 .species-card-body h4 {
   margin: 15px 0 5px;
   color: var(--forest);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1203,7 +1386,7 @@ h2 em {
   border-radius: 99px;
   background: #fff1df;
   color: #8a622f;
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
   padding: 6px 9px;
 }
@@ -1226,7 +1409,7 @@ h2 em {
 
 .learn-note p {
   margin: 0;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -1261,7 +1444,7 @@ h2 em {
   border-radius: 50%;
   background: var(--soft-green);
   color: var(--forest);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -1279,7 +1462,7 @@ h2 em {
   gap: 7px;
   margin: 0 0 28px 47px;
   color: #4f5f52;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1289,6 +1472,100 @@ h2 em {
   font-weight: 400;
 }
 
+.photo-identification {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 27px 47px;
+}
+
+.photo-upload-label,
+.candidate-label {
+  color: #4f5f52;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.photo-instruction {
+  margin: 0;
+}
+
+.photo-file-note {
+  margin: -5px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.photo-identification input[type='file'] {
+  width: 100%;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+}
+
+.photo-preview {
+  width: min(100%, 360px);
+  max-height: 240px;
+  justify-self: start;
+  border: 1px solid #e4e8df;
+  border-radius: 9px;
+  object-fit: contain;
+}
+
+.identify-button {
+  justify-self: start;
+}
+
+.identification-result {
+  display: grid;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid #dce6d8;
+  border-radius: 9px;
+  background: #f3f7f0;
+  color: #4f5f52;
+}
+
+.identification-result > strong {
+  color: var(--forest);
+  font-size: 15px;
+}
+
+.identification-result p,
+.identification-result small {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.identification-result ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.identification-result li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.identification-result li button {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid #b8c8b1;
+  border-radius: 6px;
+  background: white;
+  color: var(--forest);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .form-heading--location {
   margin-bottom: 12px;
 }
@@ -1296,7 +1573,7 @@ h2 em {
 .form-instruction {
   margin: 0 0 11px 47px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -1304,7 +1581,7 @@ h2 em {
   min-height: 39px;
   margin: 0 0 14px 47px;
   padding-inline: 13px;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .report-form .map-frame {
@@ -1326,12 +1603,12 @@ h2 em {
   border-radius: 7px;
   background: #f2f5ef;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .coordinates-box strong {
   color: var(--forest);
-  font-size: 11px;
+  font-size: 14px;
   text-align: right;
 }
 
@@ -1371,7 +1648,7 @@ h2 em {
 .report-aside > p:not(.eyebrow) {
   margin-bottom: 16px;
   color: #647267;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.75;
 }
 
@@ -1427,13 +1704,13 @@ h2 em {
   border-radius: 50%;
   background: var(--orange);
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
 .volunteer-safety p {
   margin: 0;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -1442,7 +1719,7 @@ h2 em {
   border-radius: 10px;
   background: rgb(255 255 255 / 55%);
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -1471,7 +1748,7 @@ h2 em {
 .site-footer > a:last-child {
   margin: 0;
   color: #7b887c;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .site-footer > a:last-child {
@@ -1546,7 +1823,7 @@ h2 em {
   }
 
   .nav-link {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .nav-link.is-active::after {
@@ -1556,7 +1833,7 @@ h2 em {
   .points-badge {
     max-width: 135px;
     overflow: hidden;
-    font-size: 11px;
+    font-size: 14px;
     text-overflow: ellipsis;
   }
 
@@ -1608,8 +1885,8 @@ h2 em {
   .hero-caption {
     right: 2%;
     bottom: 2px;
-    max-width: 120px;
-    font-size: 10px;
+    max-width: 150px;
+    font-size: 14px;
   }
 
   .section {
@@ -1650,15 +1927,21 @@ h2 em {
   }
 
   .why-illustration {
-    min-height: 230px;
+    margin-bottom: 12px;
   }
 
-  .why-illustration .botanical-art {
-    max-height: 250px;
+  .why-species-photo {
+    width: min(100%, 380px);
   }
 
   .community-cta {
-    padding-block: 60px;
+    padding-block: 60px 78px;
+  }
+
+  .cta-photo-credit {
+    right: 18px;
+    bottom: 14px;
+    font-size: 12px;
   }
 
   .cta-leaf--one {
@@ -1729,7 +2012,7 @@ h2 em {
     flex-wrap: wrap;
     gap: 10px 16px;
     padding-block: 9px;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .loading-copy {

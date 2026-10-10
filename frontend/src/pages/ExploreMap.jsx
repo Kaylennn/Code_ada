@@ -45,7 +45,7 @@ function ExploreMap({
             Report a sighting <span aria-hidden="true">↗</span>
           </a>
         </div>
-        <p>Browse community reports and backend-identified pull sites around Champaign-Urbana.</p>
+        <p>Browse community reports, pull sites, and illustrative locations for every invasive species in the catalog.</p>
       </div>
 
       <div className="map-toolbar">
@@ -76,6 +76,7 @@ function ExploreMap({
 
       <div className="map-legend" aria-label="Map marker legend">
         <span><i className="legend-plant" aria-hidden="true">✿</i> Reported sighting</span>
+        <span><i className="legend-example" aria-hidden="true">✿</i> Illustrative species location (not a report)</span>
         <span><i className="legend-site" aria-hidden="true">4</i> Pull site from backend</span>
         {loading && <span className="loading-copy" role="status">Updating map…</span>}
       </div>
@@ -83,6 +84,8 @@ function ExploreMap({
         sightings={filteredSightings}
         pullsites={filteredPullsites}
         selectedKey={selectedKey}
+        showIllustrativeSpecies
+        speciesFilter={speciesFilter}
         onSelect={(marker) => setSelectedKey(marker.key)}
       />
 
@@ -92,7 +95,7 @@ function ExploreMap({
             <p className="eyebrow">From the community</p>
             <h2>Map details</h2>
           </div>
-          <p>Markers show records returned by the project API.</p>
+          <p>Illustrative species locations are examples only and do not represent verified sightings.</p>
         </div>
         {selectedSighting && <SightingCard sighting={selectedSighting} />}
         {selectedPullsite && <PullSiteCard pullsite={selectedPullsite} onSignup={onSignup} />}

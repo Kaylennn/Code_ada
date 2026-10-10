@@ -10,13 +10,25 @@ Use two terminals from the project root.
 ### 1. Start the backend
 
 ```sh
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r backend/requirements.txt
-python backend/app.py
+uv python install 3.13
+uv venv --python 3.13 .venv-bioclip
+uv pip install --python .venv-bioclip/bin/python -r backend/requirements.txt
+cd backend
+../.venv-bioclip/bin/python -m flask --app app run --host 127.0.0.1 --port 5000
 ```
 
-The API runs at `http://localhost:5000`.
+Use Python 3.10–3.13 for the BioCLIP dependency's currently tested versions.
+The API runs at `http://localhost:5000`. Photo identification uses BioCLIP 2
+through `pybioclip`; its model files are downloaded the first time an
+identification request is made, so that first request can take longer and
+requires an internet connection. Uploaded images are processed in memory and
+are not saved by the API.
+
+BioCLIP returns suggestions from TerraTrace's species list plus broad
+out-of-catalog categories. Its relative scores are not calibrated
+probabilities, and a result outside the catalog is not proof that a species is
+non-invasive. Observers should confirm the suggested species before submitting
+a report.
 
 ### 2. Start the frontend
 

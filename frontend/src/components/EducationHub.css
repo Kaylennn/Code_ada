@@ -82,12 +82,12 @@
 
 .edu-card-summary {
   color: var(--edu-muted);
-  font-size: 0.9rem;
+  font-size: 1rem;
   flex: 1;
 }
 
 .edu-card-meta {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--edu-muted);
 }
 
@@ -147,7 +147,7 @@
 
 .edu-lesson-text em {
   color: var(--edu-muted);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .edu-check {
@@ -166,7 +166,7 @@
 .edu-tag {
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   background: var(--edu-bg-alt);
   color: var(--edu-muted);
@@ -268,11 +268,11 @@
   flex-direction: column;
   gap: 2px;
   padding: 8px 10px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .edu-credit {
-  font-size: 0.7rem;
+  font-size: 0.875rem;
   color: var(--edu-muted);
   text-decoration: none;
 }
@@ -322,7 +322,7 @@
 
 .edu-muted {
   color: var(--edu-muted);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .edu-safety {
@@ -347,7 +347,7 @@
 .edu-month {
   text-align: center;
   padding: 4px 0;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   border-radius: 4px;
   background: var(--edu-bg-alt);
   color: var(--edu-muted);
@@ -459,7 +459,7 @@
 
 .edu-explain {
   margin: 8px 0 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--edu-muted);
 }
 
@@ -486,7 +486,7 @@
 
 .edu-sources {
   margin-top: 24px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--edu-muted);
 }
 
