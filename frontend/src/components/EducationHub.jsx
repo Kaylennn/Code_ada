@@ -302,13 +302,10 @@ function SpeciesLesson({ info, onReportSpecies }) {
         <p>{info.safety}</p>
       </section>
 
-      {info.in_spec && onReportSpecies && (
+      {onReportSpecies && (
         <button className="edu-report-btn" onClick={() => onReportSpecies(info.key)}>
-          Seen {info.name}? Report it on the map
+          Seen {info.name}? Report a sighting
         </button>
-      )}
-      {!info.in_spec && (
-        <p className="edu-muted">Reporting this species is not available in the current report form.</p>
       )}
     </article>
   )

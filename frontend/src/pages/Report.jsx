@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Callout from '../components/Callout.jsx'
 import MapView from '../components/MapView.jsx'
+import SpeciesSelect from '../components/SpeciesSelect.jsx'
 import { speciesOptions } from '../data/speciesMetadata.js'
 
 function Report({ onSubmitReport, initialSpecies = '' }) {
@@ -71,13 +72,18 @@ function Report({ onSubmitReport, initialSpecies = '' }) {
             <span className="form-step">01</span>
             <div><p className="eyebrow">Observation details</p><h2>What did you see?</h2></div>
           </div>
-          <label className="form-field" htmlFor="report-species">
-            <span>Plant species</span>
-            <select id="report-species" value={species} onChange={(event) => setSpecies(event.target.value)} required>
-              <option value="">Select a species</option>
-              {speciesOptions.map((item) => <option key={item.key} value={item.key}>{item.name}</option>)}
-            </select>
-          </label>
+          <div className="form-field">
+            <span id="report-species-label">Species or pest</span>
+            <SpeciesSelect
+              className="report-species-select"
+              id="report-species"
+              labelId="report-species-label"
+              onChange={setSpecies}
+              options={speciesOptions}
+              placeholder="Select a species"
+              value={species}
+            />
+          </div>
           <div className="form-heading form-heading--location">
             <span className="form-step">02</span>
             <div><p className="eyebrow">Location</p><h2>Where did you see it?</h2></div>

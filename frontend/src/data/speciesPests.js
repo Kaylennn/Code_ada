@@ -2,8 +2,8 @@
 // "Management of Invasive Plants and Pests of Illinois" guide plus the
 // Extension "Invasive Insects" page (extension.illinois.edu/invasives/invasive-insects).
 //
-// None of these keys are in the Shared Spec yet. pull_rate is null because
-// you don't "pull" insects, so the backend's volunteer estimate does not apply.
+// pull_rate is null because pests are reportable but do not produce volunteer
+// pull sites, so the backend's volunteer estimate does not apply.
 
 export const PESTS = {
   // ------------------------------------------------------------------------

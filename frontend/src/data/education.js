@@ -1,10 +1,7 @@
 // Education content for the Invasive Pull Site app.
 //
-// Species data lives in speciesPlants.js and speciesPests.js. The 5 Shared
-// Spec keys (buckthorn, canada_thistle, poison_hemlock, multiflora_rose,
-// garlic_mustard) are marked in_spec: true and can be reported through the
-// current app. Other species are educational only until their identifiers are
-// supported by the backend.
+// Species data lives in speciesPlants.js and speciesPests.js. All species can
+// be reported; pests do not produce volunteer pull sites.
 //
 // Sources:
 //  - Illinois Extension, "Management of Invasive Plants and Pests of Illinois"

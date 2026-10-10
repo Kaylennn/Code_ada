@@ -3,9 +3,8 @@
 // Removal advice follows that guide. Identification notes are general field
 // botany, because the guide itself focuses on control, not ID.
 //
-// in_spec: true marks the 5 species keys in the Shared Spec. All other keys
-// are new and must be added to backend/species.py before reports of them work.
-// farm_risk / pull_rate for new species are placeholder values, like the spec's.
+// in_spec: true marks the original Shared Spec species. farm_risk / pull_rate
+// for new species are placeholder values, like the spec's.
 
 export const PLANTS = {
   // ------------------------------------------------------------------------
