@@ -28,7 +28,6 @@ function Navbar({ activePage, pointsMessage }) {
       </nav>
       <div className="header-actions">
         <PointsBadge message={pointsMessage} />
-        <a className="button button--small" href="#report">Report sighting <span aria-hidden="true">↗</span></a>
       </div>
     </header>
   )

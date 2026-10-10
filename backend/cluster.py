@@ -20,6 +20,9 @@ def find_pull_sites(sightings):
         by_species.setdefault(s["species"], []).append(s)
 
     for species, group in by_species.items():
+        if SPECIES[species]["pull_rate"] is None:
+            continue
+
         unvisited = set(range(len(group)))
         while unvisited:
             # grow one cluster by walking through nearby neighbors

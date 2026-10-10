@@ -85,6 +85,7 @@ function MapView({
             key={marker.key}
             position={marker.position}
             icon={pullsiteIcon(marker.sighting_count, selectedKey === marker.key)}
+            zIndexOffset={1000}
             title={`${speciesMetadata[marker.species]?.name ?? marker.species} pull site with ${marker.sighting_count} sightings`}
             alt={`Pull site: ${marker.sighting_count} sightings`}
             keyboard

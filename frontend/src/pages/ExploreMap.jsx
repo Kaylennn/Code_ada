@@ -3,6 +3,7 @@ import Callout from '../components/Callout.jsx'
 import MapView from '../components/MapView.jsx'
 import PullSiteCard from '../components/PullSiteCard.jsx'
 import SightingCard from '../components/SightingCard.jsx'
+import SpeciesSelect from '../components/SpeciesSelect.jsx'
 import { speciesOptions } from '../data/speciesMetadata.js'
 
 function ExploreMap({
@@ -35,26 +36,35 @@ function ExploreMap({
   const hasRecords = filteredSightings.length > 0 || filteredPullsites.length > 0
 
   return (
-    <section className="page-shell page-section">
+    <section className="page-shell page-section map-page">
       <div className="page-intro">
         <p className="eyebrow">Observe. Understand. Restore.</p>
-        <h1>Explore the map</h1>
+        <div className="map-page-title-row">
+          <h1>Explore the map</h1>
+          <a className="button map-report-cta" href="#report">
+            Report a sighting <span aria-hidden="true">↗</span>
+          </a>
+        </div>
         <p>Browse community reports and backend-identified pull sites around Champaign-Urbana.</p>
       </div>
 
       <div className="map-toolbar">
-        <label className="filter-control">
-          <span>Species</span>
-          <select value={speciesFilter} onChange={(event) => setSpeciesFilter(event.target.value)}>
-            <option value="all">All species</option>
-            {speciesOptions.map((species) => <option key={species.key} value={species.key}>{species.name}</option>)}
-          </select>
-        </label>
+        <div className="filter-control">
+          <span id="species-filter-label">Species</span>
+          <SpeciesSelect
+            className="species-filter"
+            id="species-filter"
+            includeAll
+            labelId="species-filter-label"
+            onChange={setSpeciesFilter}
+            options={speciesOptions}
+            value={speciesFilter}
+          />
+        </div>
         <label className="checkbox-control">
           <input checked={farmRiskOnly} onChange={(event) => setFarmRiskOnly(event.target.checked)} type="checkbox" />
           <span>Farm-risk pull sites only</span>
         </label>
-        <a className="inline-link" href="#report">+ Report a sighting</a>
       </div>
 
       {(sightingsError || pullsitesError) && (
