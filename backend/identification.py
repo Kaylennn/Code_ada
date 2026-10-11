@@ -2,7 +2,10 @@ import threading
 
 from PIL import Image, ImageOps, UnidentifiedImageError
 
-from species import SCIENTIFIC_NAMES, SPECIES
+try:
+    from .species import SCIENTIFIC_NAMES, SPECIES
+except ImportError:  # pragma: no cover - allows running identification.py directly from backend/
+    from species import SCIENTIFIC_NAMES, SPECIES
 
 MAX_IMAGE_PIXELS = 20_000_000
 INVASIVE_SCORE_THRESHOLD = 0.35

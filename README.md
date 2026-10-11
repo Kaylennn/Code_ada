@@ -44,3 +44,15 @@ running while using the app.
 
 The backend uses in-memory state initialized from `backend/seed_data.json`;
 reports and signups reset to the seed data when the backend restarts.
+
+## Deploy on Render
+
+Push the project to GitHub, then create a Render Blueprint from that repository.
+Render reads `render.yaml` to build the frontend and run the Flask API as one
+web service. After the first deploy finishes, share the service URL; visitors
+do not need to install or start anything. The free service may sleep when idle,
+so its first request after a quiet period can take a little longer.
+
+The demo's reports and volunteer signups are held in memory and reset whenever
+the service restarts. Photo identification also downloads its model on first
+use and may require more memory than a free instance provides.

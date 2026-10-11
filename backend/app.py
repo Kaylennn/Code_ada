@@ -6,10 +6,15 @@ from datetime import date
 from flask import Flask, jsonify, request
 from werkzeug.exceptions import RequestEntityTooLarge
 
-from cluster import find_pull_sites
-from species import SPECIES
+try:
+    from .cluster import find_pull_sites
+    from .species import SPECIES
+except ImportError:  # pragma: no cover - allows running app.py directly from backend/
+    from cluster import find_pull_sites
+    from species import SPECIES
 
-app = Flask(__name__)
+FRONTEND_DIST = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend", "dist"))
+app = Flask(__name__, static_folder=FRONTEND_DIST, static_url_path="")
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 
 SEED_PATH = os.path.join(os.path.dirname(__file__), "seed_data.json")
@@ -88,6 +93,11 @@ next_pullsite_id = max((p["id"] for p in pullsites), default=0) + 1
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
+@app.route("/")
+def index():
+    return app.send_static_file("index.html")
+
+
 @app.route("/api/sightings", methods=["GET"])
 def get_sightings():
     return jsonify(sightings)

@@ -1,5 +1,9 @@
 import math
-from species import SPECIES, estimate_volunteers
+
+try:
+    from .species import SPECIES, estimate_volunteers
+except ImportError:  # pragma: no cover - allows running cluster.py directly from backend/
+    from species import SPECIES, estimate_volunteers
 
 CLUSTER_RADIUS_M = 200
 MIN_SIGHTINGS = 3
